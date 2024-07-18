@@ -7,7 +7,10 @@ const ProductCard = ({ product }) => {
     <div>
       <h2>{product.name}</h2>
       <p>{product.price}</p>
-      <Link href={`/products/${product.id}`}><a>View Details</a></Link>
+      <p>{product.category}</p>
+      <Link href={`/products/${product.id}`} legacyBehavior>
+        <a>View Details</a>
+      </Link>
     </div>
   );
 };

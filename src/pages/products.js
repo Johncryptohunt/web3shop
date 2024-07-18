@@ -7,8 +7,8 @@ import ProductCard from '../components/ProductCard';
 const Products = () => {
   // Example product data
   const products = [
-    { id: 1, name: 'Product 1', price: '10 USDT' },
-    { id: 2, name: 'Product 2', price: '20 USDT' },
+    { id: 1, name: 'Product 1', price: '10 USDT', category: 'Electronics' },
+    { id: 2, name: 'Product 2', price: '20 USDT', category: 'Clothing' },
   ];
 
   return (
