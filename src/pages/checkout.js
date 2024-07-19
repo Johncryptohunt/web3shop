@@ -1,19 +1,19 @@
-// pages/checkout.js
-import React from 'react';
+// src/pages/checkout.js
+import React, { useContext } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PaymentForm from '../components/PaymentForm';
+import { CartContext } from '../context/CartContext';
 
 const Checkout = () => {
+  const { handlePayment } = useContext(CartContext);
+
   return (
     <div>
       <Navbar />
       <h1>Checkout</h1>
-      <PaymentForm 
-        amount={50.00} // Example amount in USD or equivalent
-        currency="USD" // Currency (can be changed based on your setup)
-        productName="Example Product" // Replace with your product name
-      />
+      <p>Proceed with your crypto payment here.</p>
+      <PaymentForm onSubmit={handlePayment} />
       <Footer />
     </div>
   );
