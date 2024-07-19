@@ -5,27 +5,32 @@ import Footer from '../components/Footer';
 
 const Checkout = () => {
   const [paymentLink, setPaymentLink] = useState('');
+  const [error, setError] = useState('');
 
   const handlePayment = async () => {
-    const response = await fetch('/api/create-charge', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        amount: '10', // Replace with dynamic amount
-        currency: 'USD',
-        description: 'Your product description',
-      }),
-    });
+    try {
+      const response = await fetch('/api/create-charge', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: '10', // Replace with dynamic amount
+          currency: 'USD',
+          description: 'Your product description',
+        }),
+      });
 
-    const data = await response.json();
-    if (response.ok) {
+      if (!response.ok) {
+        throw new Error('Failed to create payment');
+      }
+
+      const data = await response.json();
       setPaymentLink(data.paymentLink);
       console.log('Payment created, redirecting to:', data.paymentLink);
-      // Optionally, handle the payment redirection
-    } else {
-      console.error('Error creating payment:', data.error);
+    } catch (error) {
+      console.error('Error creating payment:', error);
+      setError('An error occurred while creating the payment. Please try again.');
     }
   };
 
@@ -35,7 +40,13 @@ const Checkout = () => {
       <h1>Checkout</h1>
       <p>Proceed with your crypto payment here.</p>
       <button onClick={handlePayment}>Pay Now</button>
-      {paymentLink && <a href={paymentLink} target="_blank" rel="noopener noreferrer">Complete Payment</a>}
+      {paymentLink && (
+        <div>
+          <p>Complete your payment here:</p>
+          <a href={paymentLink} target="_blank" rel="noopener noreferrer">Complete Payment</a>
+        </div>
+      )}
+      {error && <p>{error}</p>}
       <Footer />
     </div>
   );
